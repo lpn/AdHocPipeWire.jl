@@ -3,6 +3,9 @@ uuid = "ad048814-b611-414f-bad3-11d7c77de698"
 authors = ["L. Nikko <lpn@users.noreply.github.com> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+Timers = "21f18d07-b854-4dab-86f0-c15a3821819a"
+
 [compat]
 julia = "1.6.7"
 
