@@ -22,7 +22,6 @@ function tone(format, length=3; conv=identity)
     true
 end
 
-tone(format::AbstractFloat) = tone(format; conv=identity)
 tone(format::Type{T}) where {T<:Signed} = tone(format; conv=conv = x -> round(format, typemax(format) * x))
 
 @testset "PipeWire.jl" begin
