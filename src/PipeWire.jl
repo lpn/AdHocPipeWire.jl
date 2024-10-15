@@ -55,9 +55,9 @@ end
 
 Base.write(pw::PipeTunnel, xs) = write(pw.stream, xs |> htol)
 
-function Base.Channel(pw::PipeTunnel, n=2)
+function Base.Channel(pw::PipeTunnel, n=2; spawn=false)
     latency_ns = 1e9 * pw.props.latency / pw.props.rate
-    Channel{Vector{pw.props.format}}(n) do buffers
+    Channel{Vector{pw.props.format}}(n; spawn=spawn) do buffers
         foreach(buffers) do buffer
             write(pw, buffer)
             wait_until(time_ns() + latency_ns)
