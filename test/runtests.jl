@@ -3,7 +3,7 @@ using Test
 
 function tone(format, length=3; conv=identity)
     pw = PipeWire.PipeTunnel(; latency=1024, rate=48000, format=format)
-    chnl = Channel(pw)
+    chnl = Channel(pw, 4)
 
     @show pw
 

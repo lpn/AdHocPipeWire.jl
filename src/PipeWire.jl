@@ -56,7 +56,7 @@ end
 Base.write(pw::PipeTunnel, xs) = write(pw.stream, xs |> htol)
 
 function Base.Channel(pw::PipeTunnel, n=2; spawn=false)
-    isfull(ch::Channel) = (ch.sz_max == 0) || (length(ch.data) == ch.sz_max)
+    isfull(ch::Channel) = (ch.sz_max == 0) || (length(ch.data) >= ch.sz_max-1)
     latency_ns = 1e9 * pw.props.latency / pw.props.rate
 
     Channel{Vector{pw.props.format}}(n; spawn=spawn) do buffers
