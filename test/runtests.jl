@@ -12,7 +12,7 @@ function tone(format, length=3; conv=identity)
     latency = pw.props.latency
     iterations = div(length * pw.props.rate, latency)
 
-    @time foreach(1:iterations) do i
+    @time for i in 1:iterations
         xs = [generate(latency * i + x, 220 * exp2(ch * exp2(-6.5))) for x in 1:latency for ch in -1:2:1]
         put!(chnl, xs)
     end
