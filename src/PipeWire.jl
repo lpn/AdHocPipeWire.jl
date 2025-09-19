@@ -47,7 +47,7 @@ end
 
 function Base.write(pw::PipeCat, xs)
     write(pw.process, xs |> htol)
-    flush(pw.process)
+    # flush(pw.process)
 end
 
 struct PipeTunnel <: PipewireModule
