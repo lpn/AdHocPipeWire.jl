@@ -125,11 +125,11 @@ function (w::Writer{T,U})(buffer::Vector{T}) where {T,U<:PipewireModule}
         w.underruns += 1
     end
 
-    sleep_ms(d * 2 / 4)
+    sleep_ms(d * 7 / 8)
 
     write(pw, buffer)
 
-    sleep_ms(d * 2 / 4)
+    sleep_ms(d * 1 / 8)
 
     w.last_ns = time_ns()
 end
