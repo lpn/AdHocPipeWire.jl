@@ -9,7 +9,7 @@ struct PipeCat <: PipewireModule
     props::NamedTuple
 end
 
-function PipeCat(; mode=:playback, latency::T=1024, format=Float32, channels::T=2, rate::T=48000, position::String="[ FL FR ]") where {T<:Integer}
+function PipeCat(; mode=:playback, latency::T=1024, format=Float32, channels::T=2, rate::T=48000, position::String="stereo") where {T<:Integer}
     jl2pw(T) = error("Unsupported stream format: $T")
     jl2pw(::Type{Int8}) = :s8
     jl2pw(::Type{Int16}) = :s16
@@ -22,6 +22,7 @@ function PipeCat(; mode=:playback, latency::T=1024, format=Float32, channels::T=
         --rate=$rate \
         --latency=$latency \
         --channels=$channels \
+        --channel-map=$position \
         --format=$(jl2pw(format)) \
         --raw -
     `)
@@ -60,7 +61,7 @@ function PipeTunnel(; name::String="julia-pw", mode=:playback, latency::T=1024, 
     ispath(filename) && error("pipe \"$filename\" already exists!")
 
     jl2pw(T) = error("Unsupported stream format: $T")
-    # jl2pw(::Type{Int8}) = :S8 # broken
+    jl2pw(::Type{Int8}) = :S8
     jl2pw(::Type{Int16}) = :S16LE
     jl2pw(::Type{Int32}) = :S32LE
     jl2pw(::Type{Float32}) = :F32LE

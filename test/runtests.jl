@@ -35,6 +35,7 @@ scale(T, x) = round(T, x * typemax(T))
         @test tone(pw, Float32)
         @test tone(pw, Int32; conv=x -> scale(Int32, x))
         @test tone(pw, Int16; conv=x -> scale(Int16, x))
+        @test tone(pw, Int8; conv=x -> scale(Int8, x))
     end
     @testset "PipeTunnel" begin
         pw = PipeWire.PipeCat
