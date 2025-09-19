@@ -46,7 +46,7 @@ function Base.close(p::PipeCat)
 end
 
 function Base.write(pw::PipeCat, xs)
-    write(pw.process, xs)
+    write(pw.process, xs |> htol)
     flush(pw.process)
 end
 
