@@ -6,6 +6,7 @@ abstract type PipewireModule end
 
 include("./PipeCat.jl")
 include("./PipeTunnel.jl")
+include("./Simple.jl")
 
 Writer(pw::T; headroom=1.0) where {T<:PipewireModule} = Writer{pw.props.format,T}(pw, time_ns(), 0)
 
