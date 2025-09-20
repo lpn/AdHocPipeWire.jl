@@ -9,7 +9,7 @@ Timers = "21f18d07-b854-4dab-86f0-c15a3821819a"
 
 [compat]
 Sockets = "1.11.0"
-julia = "1.6.7"
+julia = "1.11"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
