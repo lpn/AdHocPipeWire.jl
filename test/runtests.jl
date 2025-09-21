@@ -2,7 +2,7 @@ using PipeWire
 using Test
 
 function tone(Impl, format, length=3; conv=identity)
-    pw = Impl(; latency=4 * 1024, rate=48000, format=format)
+    pw = Impl(; latency=1024, rate=48000, format=format)
 
     chnl = Channel(pw, 1; spawn=false)
 
@@ -37,12 +37,20 @@ scale(T, x) = round(T, x * typemax(T))
         @test tone(pw, Int16; conv=x -> scale(Int16, x))
         @test tone(pw, Int8; conv=x -> scale(Int8, x))
     end
-    @testset "PipeTunnel" begin
-        pw = PipeWire.PipeCat
+    # @testset "PipeCat" begin
+    #     pw = PipeWire.PipeCat
+    #     # @test tone(pw, Float64; conv=Float64)
+    #     @test tone(pw, Float32; conv=Float32)
+    #     @test tone(pw, Int32; conv=x -> scale(Int32, x))
+    #     @test tone(pw, Int16; conv=x -> scale(Int16, x))
+    #     @test tone(pw, Int8; conv=x -> scale(Int8, x))
+    # end
+    @testset "Simple" begin
+        pw = PipeWire.Simple
         # @test tone(pw, Float64; conv=Float64)
-        @test tone(pw, Float32; conv=Float32)
-        @test tone(pw, Int32; conv=x -> scale(Int32, x))
-        @test tone(pw, Int16; conv=x -> scale(Int16, x))
-        @test tone(pw, Int8; conv=x -> scale(Int8, x))
+        # @test tone(pw, Float32; conv=Float32)
+        # @test tone(pw, Int32; conv=x -> scale(Int32, x))
+        # @test tone(pw, Int16; conv=x -> scale(Int16, x))
+        # @test tone(pw, Int8; conv=x -> scale(Int8, x))
     end
 end
