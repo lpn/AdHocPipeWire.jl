@@ -15,7 +15,6 @@ function tone(Impl, format, length=3; conv=identity)
 
     @time for i in 1:iterations
         xs = [generate(latency * i + x, 220 * exp2(ch * exp2(-6.5))) for x in 1:latency for ch in -1:2:1]
-        # write(pw, xs)
         put!(chnl, xs)
     end
 
@@ -36,21 +35,5 @@ scale(T, x) = round(T, x * typemax(T))
         @test tone(pw, Int32; conv=x -> scale(Int32, x))
         @test tone(pw, Int16; conv=x -> scale(Int16, x))
         @test tone(pw, Int8; conv=x -> scale(Int8, x))
-    end
-    # @testset "PipeCat" begin
-    #     pw = PipeWire.PipeCat
-    #     # @test tone(pw, Float64; conv=Float64)
-    #     @test tone(pw, Float32; conv=Float32)
-    #     @test tone(pw, Int32; conv=x -> scale(Int32, x))
-    #     @test tone(pw, Int16; conv=x -> scale(Int16, x))
-    #     @test tone(pw, Int8; conv=x -> scale(Int8, x))
-    # end
-    @testset "Simple" begin
-        pw = PipeWire.Simple
-        # @test tone(pw, Float64; conv=Float64)
-        # @test tone(pw, Float32; conv=Float32)
-        # @test tone(pw, Int32; conv=x -> scale(Int32, x))
-        # @test tone(pw, Int16; conv=x -> scale(Int16, x))
-        # @test tone(pw, Int8; conv=x -> scale(Int8, x))
     end
 end
