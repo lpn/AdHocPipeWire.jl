@@ -4,16 +4,16 @@ mutable struct Writer{T,U<:PipewireModule}
     underruns::Int
 end
 
-Writer(pw::T; headroom=1.0) where {T<:PipewireModule} = Writer{pw.props.format,T}(pw, time_ns(), 0)
+Writer(pw::T) where {T<:PipewireModule} = Writer{pw.props.format,T}(pw, time_ns(), 0)
 
 function (w::Writer{T,U})(buffer::Vector{T}) where {T,U<:PipewireModule}
     pw = w.pw
 
     latency_ns = 1e9 * pw.props.latency / pw.props.rate
     current_ns = time_ns()
-    delay_ms = max(0, latency_ns - (current_ns - w.last_ns)) / 1e6
+    delay_ms = max(zero(latency_ns), latency_ns - (current_ns - w.last_ns)) / 1e6
 
-    w.underruns += (delay_ms == 0)
+    w.underruns += iszero(delay_ms)
 
     sleep_ms(delay_ms)
 
