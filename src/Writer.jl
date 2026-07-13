@@ -1,6 +1,6 @@
 mutable struct Writer{T,U<:PipewireModule}
     pw::U
-    last_ns
+    last_ns::UInt64
     underruns::Int
 end
 
