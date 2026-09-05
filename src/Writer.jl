@@ -15,7 +15,8 @@ function (w::Writer{T,U})(buffer::Vector{T}) where {T,U<:PipewireModule}
 
     w.underruns += iszero(delay_ms)
 
-    sleep_ms(delay_ms)
+    # sleep_ms(delay_ms)
+    wait_until(w.last_ns + latency_ns)
 
     write(pw, buffer)
 
