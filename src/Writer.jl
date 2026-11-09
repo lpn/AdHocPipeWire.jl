@@ -11,12 +11,13 @@ function (w::Writer{T,U})(buffer::Vector{T}) where {T,U<:PipewireModule}
 
     latency_ns = 1e9 * pw.props.latency / pw.props.rate
     current_ns = time_ns()
-    delay_ms = max(zero(latency_ns), latency_ns - (current_ns - w.last_ns)) / 1e6
+    delay_ms = (latency_ns - (current_ns - w.last_ns)) / 1e6
 
-    w.underruns += iszero(delay_ms)
-
-    # sleep_ms(delay_ms)
-    wait_until(w.last_ns + latency_ns)
+    if delay_ms >= 0
+        sleep_ms(delay_ms)
+    else
+        w.underruns += 1
+    end
 
     write(pw, buffer)
 
