@@ -12,7 +12,9 @@ abstract type PipewireModule end
     # sleep and allow cooperative multitasking
     if (finish - delta) >= _time_ns
         t = 1e-9 * (finish - _time_ns - delta)
-        t > 0 && sleep(t)
+        if t >= 0
+            sleep(t)
+        end
     end
     # busy waiting
     while finish > time_ns()
